@@ -15,8 +15,8 @@ Stores connection details as well as settings for your runs. Create it in the ro
 | attempts                   | No        | integer | 1       | value > 0, value <= 200  | Number of times to run query                             |
 | wait_cycles*               | No        | integer | 5       | value > 0                | Number of times to poll for status                       |
 | sleep_time*                | No        | integer | 5       | value > 0                | Seconds to wait between polls                            |
-| synchronous                | No        | boolean | True    | True / False             | Wait for attempt to finish before moving to next attempt |
-| silent                     | No        | boolean | True    | True / False             | Log more (True) or lesser (True) information             |
+| synchronous                | No        | boolean | True    | True / False             | Wait for attempt to finish before moving to next attempt (True) or run all attempts without waiting for previous attempt to finish (False) |
+| silent                     | No        | boolean | True    | True / False             | Log less (True) or more (False) information             |
 | resultcache                | No        | boolean | False   | True / False             | Enable (True) or disable (False) result cache            |
 | mvrewrite                  | No        | boolean | False   | True / False             | Enable (True) or disable (False) query rewrite to use MV |
 
