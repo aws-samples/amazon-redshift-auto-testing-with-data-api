@@ -1,0 +1,19 @@
+# query with return
+- >
+  select current_user;
+# query with error
+- >
+  select current_user1;
+# query with no return
+- >
+  create temp table tmp_a as select 'abc' as col_1;
+# query with dependency and return
+-
+  - >
+    create temp table tmp_a as
+    select 'abc' as col_1;
+  - >
+    create temp table tmp_b as
+    select upper(col_1) from tmp_a;
+  - >
+    select * from tmp_b;
