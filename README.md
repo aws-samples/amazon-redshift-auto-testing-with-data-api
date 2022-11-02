@@ -20,9 +20,9 @@ Stores connection details as well as settings for your runs. Create it in the ro
 | resultcache                | No        | boolean | False   | True / False             | Enable (True) or disable (False) result cache            |
 | mvrewrite                  | No        | boolean | False   | True / False             | Enable (True) or disable (False) query rewrite to use MV |
 
-*For synchronous runs, if wait_cycles=40 and sleep_time=5, each attempt of a query times out at 200 seconds. If more time is needed, increase wait_cycles or sleep_time or both.
+*For synchronous=True, if wait_cycles=40 and sleep_time=5, each attempt of a query times out at 200 seconds. If more time is needed, increase wait_cycles or sleep_time or both.
 
-*For asynchronous runs, if wait_cycles=40 and sleep_time=5, all attempts of a query times out at 200 seconds. If more time is needed, increase wait_cycles or sleep_time or both.
+*For synchronous=False, if wait_cycles=40 and sleep_time=5, all attempts of a query times out at 200 seconds. If more time is needed, increase wait_cycles or sleep_time or both.
 
 ```yaml
 config_1:
