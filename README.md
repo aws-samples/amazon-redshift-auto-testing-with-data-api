@@ -201,7 +201,7 @@ graph TD
     wait_left      --> | No  | exit_wait
     exit_wait      --> query_left{Queries left?}
     query_left     --> | Yes | query_loop
-    query_left     --> | No  | exit_quer(Exit query loop)
+    query_left     --> | No  | exit_query(Exit query loop)
     exit_query     --> stop[End]
 ```
 
