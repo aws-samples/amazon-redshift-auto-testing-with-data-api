@@ -162,18 +162,18 @@ graph TD
     send_query   --> wait_loop(Wait cycle loop)
     wait_loop    --> get_status[Get attempt status - Data API]
     get_status   --> failed{Status FAILED?}
-    failed       --> | Yes | exit_wait[Exit wait cycle loop]
+    failed       --> | Yes | exit_wait(Exit wait cycle loop)
     failed       --> | No  | finished{Status FINISHED?}
-    finished     --> | Yes | exit_wait[Exit wait cycle loop]
+    finished     --> | Yes | exit_wait
     finished     --> | No  | wait_left{Wait cycles left?}
     wait_left    --> | Yes | wait_loop
     wait_left    --> | No  | exit_wait
     exit_wait    --> attempt_left{Attempts left?}
     attempt_left --> | Yes | attempt_loop
-    attempt_left --> | No  | exit_attempt[Exit attempt loop]
+    attempt_left --> | No  | exit_attempt(Exit attempt loop)
     exit_attempt --> query_left{Queries left?}
     query_left   --> | Yes | query_loop
-    query_left   --> | No  | exit_query[Exit query loop]
+    query_left   --> | No  | exit_query(Exit query loop)
     exit_query   --> stop[End]
 ```
 
@@ -185,7 +185,7 @@ graph TD
     attempt_loop_1 --> send_query[Send query - Data API]
     send_query     --> attempt_left_1{Attempts left?}
     attempt_left_1 --> | Yes | attempt_loop_1
-    attempt_left_1 --> | No  | exit_attempt_1[Exit attempt loop 1]
+    attempt_left_1 --> | No  | exit_attempt_1(Exit attempt loop 1)
     exit_attempt_1 --> wait_loop(Wait cycle loop)
     wait_loop      --> attempt_loop_2(Attempt loop 2)
     attempt_loop_2 --> check_status{Status FAILED or FINISHED}
@@ -193,15 +193,15 @@ graph TD
     check_status   --> | No  | get_status[Get attempt status - Data API]
     get_status     --> attempt_left_2
     attempt_left_2 --> | Yes | attempt_loop_2
-    attempt_left_2 --> | No  | exit_attempt_2[Exit attempt loop]
+    attempt_left_2 --> | No  | exit_attempt_2(Exit attempt loop 2)
     exit_attempt_2 --> all_status{All status FAILED or FINISHED?}
-    all_status     --> | Yes | exit_wait[Exit wait cycle loop]
+    all_status     --> | Yes | exit_wait(Exit wait cycle loop)
     all_status     --> | No  | wait_left{Wait cycles left?}
     wait_left      --> | Yes | wait_loop
     wait_left      --> | No  | exit_wait
     exit_wait      --> query_left{Queries left?}
     query_left     --> | Yes | query_loop
-    query_left     --> | No  | exit_query[Exit query loop]
+    query_left     --> | No  | exit_quer(Exit query loop)
     exit_query     --> stop[End]
 ```
 
