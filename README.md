@@ -68,6 +68,13 @@ sample_query.yml
     select upper(col_1) from tmp_a;
   - >
     select * from tmp_b;
+# unformatted query
+- "
+        select 
+* from 
+     (select 'unformatted query' 
+  as col_1)
+"
 ```
 
 ### Start auto testing
