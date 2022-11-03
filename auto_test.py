@@ -11,7 +11,7 @@ import pandas as pd
 
 # %%
 # Basic defaults
-now = datetime.datetime.now().strftime('%Y%m%d_%H:%M:%S.%f')
+now = datetime.datetime.now().strftime('%Y%m%d_%H%M%S.%f')
 
 config_yaml_path = 'config.yml'
 test_queries_path = 'test_queries'
