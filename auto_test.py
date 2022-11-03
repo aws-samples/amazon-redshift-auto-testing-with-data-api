@@ -22,6 +22,10 @@ status_failed = 'FAILED'
 status_finished = 'FINISHED'
 
 # %%
+# Set working directory
+os.chdir(os.path.join(os.getcwd(), os.path.split(sys.argv[0])[0]))
+
+# %%
 # Logging setup to display in console and save to file
 log_formatter = logging.Formatter(
     '%(asctime)s:%(name)s:%(levelname)s:%(lineno)d:\t%(message)s')
