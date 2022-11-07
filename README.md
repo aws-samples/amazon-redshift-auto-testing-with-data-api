@@ -45,9 +45,9 @@ config_2:
 ```
 
 ### Configure test_queries
-Create yaml files containing the list of queries you need to repeatedly test in test_queries directory. sample_query.yml is for reference and can be tested. Multi-line queries are supported. Queries that depends on the completion of prior queries are also supported.
+Create yaml files containing the list of queries you need to repeatedly test in test_queries directory. sample_queries.yml is for reference and can be tested. Multi-line queries are supported. Queries that depends on the completion of prior queries are also supported.
 
-sample_query.yml
+sample_queries.yml
 ```yaml
 # query with return
 - >
@@ -85,7 +85,7 @@ Run command `python3 auto_test.py [target based on config.yml] [name of file in 
 
 Synchronous console output which is also saved in logs directory
 ```shell
-$ python3 auto_test.py config_2 sample_query.yml
+$ python3 auto_test.py config_2 sample_queries.yml
 ...
 2022-10-24 16:31:53,722:__main__:INFO:653:	Test 1
 2022-10-24 16:31:53,722:__main__:INFO:328:	- set enable_result_cache_for_session to off;
@@ -114,7 +114,7 @@ $ python3 auto_test.py config_2 sample_query.yml
 
 Asynchronous output which is also saved in logs directory
 ```shell
-$ python3 auto_test.py config_2 sample_query.yml
+$ python3 auto_test.py config_2 sample_queries.yml
 ...
 2022-10-24 16:02:13,988:__main__:INFO:656:	Test 1
 2022-10-24 16:02:13,988:__main__:INFO:328:	- set enable_result_cache_for_session to off;
