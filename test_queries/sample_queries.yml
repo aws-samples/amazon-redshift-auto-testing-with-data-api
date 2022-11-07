@@ -22,5 +22,7 @@
         select 
 * from 
      (select 'unformatted query' 
-  as col_1)
+  as col_1);
 "
+# query in .sql file
+- sample_query.sql

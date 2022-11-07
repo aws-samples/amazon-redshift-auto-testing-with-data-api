@@ -6,19 +6,19 @@ Use this project to automate repeated testing of queries on both Amazon Redshift
 ### config.yml
 Stores connection details as well as settings for your runs. Create it in the root directory of this project. You can store multiple configurations.
 
-| Parameter                  | Mandatory | Type    | Default | Valid Value              | Description                                              |
-| -------------------------- | --------- | ------- | ------- | ------------------------ | -------------------------------------------------------- |
-| clusterid_or_workgroupname | Yes       | string  |         | Any string               | Provisioned (clusterid) or serverless (workgroupname)    |
-| type                       | Yes       | string  |         | provisioned / serverless | Provisioned or serverless                                |
-| dbname                     | Yes       | string  |         | Any string               | Database name                                            |
-| secret_arn                 | Yes       | string  |         | Any string               | Secret ARN storing credentials                           |
-| attempts                   | No        | integer | 1       | value > 0, value <= 200  | Number of times to run query                             |
-| wait_cycles*               | No        | integer | 5       | value > 0                | Number of times to poll for status                       |
-| sleep_time*                | No        | integer | 5       | value > 0                | Seconds to wait between polls                            |
+| Parameter                  | Mandatory | Type    | Default | Valid Value              | Description                                                                                                                                |
+| -------------------------- | --------- | ------- | ------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| clusterid_or_workgroupname | Yes       | string  |         | Any string               | Provisioned (clusterid) or serverless (workgroupname)                                                                                      |
+| type                       | Yes       | string  |         | provisioned / serverless | Provisioned or serverless                                                                                                                  |
+| dbname                     | Yes       | string  |         | Any string               | Database name                                                                                                                              |
+| secret_arn                 | Yes       | string  |         | Any string               | Secret ARN storing credentials                                                                                                             |
+| attempts                   | No        | integer | 1       | value > 0, value <= 200  | Number of times to run query                                                                                                               |
+| wait_cycles*               | No        | integer | 5       | value > 0                | Number of times to poll for status                                                                                                         |
+| sleep_time*                | No        | integer | 5       | value > 0                | Seconds to wait between polls                                                                                                              |
 | synchronous                | No        | boolean | True    | True / False             | Wait for attempt to finish before moving to next attempt (True) or run all attempts without waiting for previous attempt to finish (False) |
-| silent                     | No        | boolean | True    | True / False             | Log less (True) or more (False) information             |
-| resultcache                | No        | boolean | False   | True / False             | Enable (True) or disable (False) result cache            |
-| mvrewrite                  | No        | boolean | False   | True / False             | Enable (True) or disable (False) query rewrite to use MV |
+| silent                     | No        | boolean | True    | True / False             | Log less (True) or more (False) information                                                                                                |
+| resultcache                | No        | boolean | False   | True / False             | Enable (True) or disable (False) result cache                                                                                              |
+| mvrewrite                  | No        | boolean | False   | True / False             | Enable (True) or disable (False) query rewrite to use MV                                                                                   |
 
 *For synchronous=True, if wait_cycles=40 and sleep_time=5, each attempt of a query times out at 200 seconds. If more time is needed, increase wait_cycles or sleep_time or both.
 
@@ -45,7 +45,7 @@ config_2:
 ```
 
 ### Configure test_queries
-Create yaml files containing the list of queries you need to repeatedly test in test_queries directory. sample_queries.yml is for reference and can be tested. Multi-line queries are supported. Queries that depends on the completion of prior queries are also supported.
+Create yaml files containing the list of queries you need to repeatedly test in test_queries directory. sample_queries.yml and sample_query.sql are for reference and can be tested. Multi-line query is supported. Query that depends on the completion of prior queries is supported. Query stored in a separate .sql file is supported.
 
 sample_queries.yml
 ```yaml
@@ -73,12 +73,14 @@ sample_queries.yml
         select 
 * from 
      (select 'unformatted query' 
-  as col_1)
+  as col_1);
 "
+# query in a separate .sql file
+- sample_query.sql
 ```
 
 ### Start auto testing
-Run command `python3 auto_test.py [target based on config.yml] [name of file in test_queries]`.
+Run command `python3 auto_test.py [target based on config.yml] [name of yaml file in test_queries]`.
 
 * Output shown on console will be saved in logs directory as TIMESTAMP.log
 * Run details from data api will be saved in run_details directory as TIMESTAMP.csv

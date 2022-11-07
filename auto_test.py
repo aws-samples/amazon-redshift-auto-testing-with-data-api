@@ -265,6 +265,7 @@ def read_queries(file_name):
        - 1st level is list
        - 1st level items are str or list
        - 2nd level items are str, if 1st level item is list
+    3. Replace .sql references with actual query
     '''
 
     logger.info('Check test queries')
@@ -291,22 +292,60 @@ def read_queries(file_name):
     if err is None:
         for first_level_item in result:
 
-            # Validate 1st level items are str or list
+            # Validate 1st level item is str or list
             if not isinstance(first_level_item, list) and not isinstance(first_level_item, str):
                 err = f'First level of {file_name} should contain list or str'
                 break
 
             # If 1st level item is list, continue to validate 2nd level item
             if isinstance(first_level_item, list):
-                for second_level in first_level_item:
+                for second_level_item in first_level_item:
 
-                    # Validate 2nd level items are str
-                    if not isinstance(second_level, str):
+                    # Validate 2nd level item is str
+                    if not isinstance(second_level_item, str):
                         err = f'Second level of {file_name} should contain str'
                         break
                 else:
                     continue
                 break
+
+    # Replace .sql references with actual query
+    if err is None:
+        for first_level_index in range(len(result)):
+        
+            first_level_item = result[first_level_index]
+
+            # If 1st level item is str and ends with .sql
+            if isinstance(first_level_item, str) and first_level_item.endswith('.sql'):
+
+                first_level_query_file_path = os.path.join(test_queries_path, first_level_item)
+
+                try:
+                    with open(first_level_query_file_path, 'r') as f_in:
+                        lines = f_in.read()
+                        result[first_level_index] = lines
+                except Exception as e:
+                    err = f'{e} while reading {first_level_query_file_path}'
+                    break
+
+            # If 1st level item is list, continue to check for 2nd level items ending with .sql
+            if isinstance(first_level_item, list):
+                for second_level_index in range(len(first_level_item)):
+                
+                    second_level_item = result[first_level_index][second_level_index]
+
+                    # If 2nd level item is str and ends with .sql
+                    if second_level_item.endswith('.sql'):
+
+                        second_level_query_file_path = os.path.join(test_queries_path, second_level_item)
+
+                        try:
+                            with open(second_level_query_file_path, 'r') as f_in:
+                                lines = f_in.read()
+                                result[first_level_index][second_level_index] = lines
+                        except Exception as e:
+                            err = f'{e} while reading {second_level_query_file_path}'
+                            break
 
     # Log number of test queries or error
     if err is None:
