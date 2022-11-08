@@ -6,7 +6,6 @@ import os
 import boto3
 import time
 import yaml
-import numpy as np
 import pandas as pd
 
 # %%
@@ -650,13 +649,13 @@ def calculate_duration_stats(attemps):
             logger.info(f'{k} duration stats ({status_finished})')
 
             logger.info(
-                f'- Min: {round(np.min(v), 3):.3f} s')
+                f'- Min: {round(min(v), 3):.3f} s')
 
             logger.info(
-                f'- Max: {round(np.max(v), 3):.3f} s')
+                f'- Max: {round(max(v), 3):.3f} s')
 
             logger.info(
-                f'- Avg: {round(np.average(v), 3):.3f} s')
+                f'- Avg: {round(sum(v)/len(v), 3):.3f} s')
 
 # %%
 def show_sample_records(redshift_data_api_client, attempts):
