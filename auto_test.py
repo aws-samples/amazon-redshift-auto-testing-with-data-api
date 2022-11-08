@@ -672,10 +672,10 @@ def show_sample_records(redshift_data_api_client, attempts):
 
     if attempts:
 
-        logger.info('Sample records')
-
         for v in attempts.values():
             if v['HasResultSet']:
+                logger.info('Sample records')
+
                 recs = redshift_data_api_client.get_statement_result(
                     Id=v['SubStatements'][-1]['Id'])
 
