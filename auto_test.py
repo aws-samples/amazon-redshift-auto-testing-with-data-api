@@ -229,7 +229,7 @@ def read_config(target):
             if param in result.keys() and details['num_lower'] is not None and result[param] < details['num_lower']:
                 err = f'Missing greater than or equal to {details["num_lower"]} value for {param} in {config_yaml_path}'
                 break
-    
+
     # Validate max numeric value
     if err is None:
         for param, details in param_checks.items():
@@ -263,6 +263,7 @@ def read_queries(file_name):
     2. Validation
        - 1st level is list
        - 1st level items are str or list
+       - 1st level items of type list contains at most N items
        - 2nd level items are str, if 1st level item is list
     3. Replace .sql references with actual query
     '''
@@ -296,6 +297,11 @@ def read_queries(file_name):
                 err = f'First level of {file_name} should contain list or str'
                 break
 
+            # If 1st level item is list, validate contains at most N items
+            if isinstance(first_level_item, list) and len(first_level_item) > 38:
+                err = f'Second level of {file_name} contains {len(first_level_item)} items - at most 38 items allowed'
+                break
+
             # If 1st level item is list, continue to validate 2nd level item
             if isinstance(first_level_item, list):
                 for second_level_item in first_level_item:
@@ -311,7 +317,7 @@ def read_queries(file_name):
     # Replace .sql references with actual query
     if err is None:
         for first_level_index in range(len(result)):
-        
+
             first_level_item = result[first_level_index]
 
             # If 1st level item is str and ends with .sql
@@ -330,7 +336,7 @@ def read_queries(file_name):
             # If 1st level item is list, continue to check for 2nd level items ending with .sql
             if isinstance(first_level_item, list):
                 for second_level_index in range(len(first_level_item)):
-                
+
                     second_level_item = result[first_level_index][second_level_index]
 
                     # If 2nd level item is str and ends with .sql
